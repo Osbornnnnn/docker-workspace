@@ -1,11 +1,19 @@
 # docker-workspace
 
-**1**. Загрузите проекты в папку Project
-
-**2**. Если вы не Я, тогда измените файлы docker-compose.yml и .env
-
-**3**. Выполните команду:
+**1**. Выполните команду:
 
 ```shell script
 docker-compose build && docker-compose up -d
+```
+
+**2**. Команда, для просмотра сетей:
+
+```shell script
+docker network ls
+```
+
+**3**. Команда, для удаления сетей:
+
+```shell script
+docker network rm NETWORK_NAME
 ```
