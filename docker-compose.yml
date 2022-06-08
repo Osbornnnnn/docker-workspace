@@ -1,27 +1,6 @@
 version: "3"
 
-networks:
-  backend:
-
 services:
-    aml-bot:
-        build: 
-            context: Project/AML-Bot
-            dockerfile: Dockerfile
-        container_name: AML-Bot
-        environment:
-            TELEGRAM_TOKEN: ${AML_BOT_TG_TOKEN}
-            MARIADB_URI: ${AML_BOT_MARIADB_URI}
-        volumes:
-            - ./Project/AML-Bot/tmp:/opt/AML-Bot/tmp
-            - ./Project/AML-Bot/reports:/opt/AML-Bot/reports
-            - ./Project/AML-Bot/logs:/opt/AML-Bot/logs
-        depends_on:
-            - mariadb
-            - phpmyadmin
-        networks:
-            - backend
-        
     mariadb:
         image: mariadb:latest
         container_name: mariadb
@@ -35,7 +14,7 @@ services:
         ports:
             - "${MARIADB_PORT}:3306"
         networks:
-            - backend
+            - default
             
     postgres:
         image: postgres:latest
@@ -49,7 +28,7 @@ services:
         ports:
             - "${POSTGRES_PORT}:5432"
         networks:
-            - backend
+            - default
             
     phpmyadmin:
         image: phpmyadmin:latest
@@ -62,7 +41,7 @@ services:
         ports:
             - "${PMA_PORT}:80"
         networks:
-            - backend
+            - default
             
     pgadmin:
         image: dpage/pgadmin4
@@ -75,4 +54,9 @@ services:
         ports:
             - "${PGA_PORT}:80"
         networks:
-            - backend
+            - default
+
+networks:
+  default:
+    external: false
+    name: backend-network
